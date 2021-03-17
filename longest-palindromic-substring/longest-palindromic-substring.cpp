@@ -26,7 +26,7 @@ public:
     }
     
     int expand(string s, int left, int right){
-        if (s.empty() || left < 0 || right > s.size())
+        if (s.empty() || left < 0 || right >= s.size())
         {
             return 0;
         }
