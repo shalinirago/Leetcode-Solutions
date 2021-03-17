@@ -1,17 +1,18 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
-        int peak = INT_MIN;
-        int peak_idx = 0;
+        return findPeak(arr, 0, arr.size()-1);
+    }   
+    
+    int findPeak(vector<int>& arr, int left, int right){
+        if (left == right)
+            return left;
         
-        for (int i = 0; i < arr.size(); i++)
-        {
-            if (arr[i] > peak){
-                peak = arr[i];
-                peak_idx = i;
-            }
+        int mid = (left+right)/2;
+        if (arr[mid] > arr[mid+1]){
+            return findPeak(arr, left, mid);
         }
         
-        return peak_idx;
+        return findPeak(arr, mid+1, right);
     }
 };
