@@ -1,38 +1,48 @@
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        vector<int> result{-1, -1};
+        vector<int> result (2, -1);
         if (nums.empty()){
             return result;
         }
         
+        int left = 0, right = nums.size()-1;
         
-        int firstIdx = binarySearch(nums, target, true);
-        if (firstIdx == nums.size() || nums[firstIdx] != target)
-            return result;
+        while (left <= right){
+            int mid = left + (right - left)/2;
+            
+            if (nums[mid] == target){
+                right = mid-1;
+                result[0] = mid;                
+            }
+            
+            else if (nums[mid] > target){
+                right = mid-1;
+            }
+            else{
+                left = mid+1;
+            }
+        }
+        left = 0, right = nums.size()-1;
         
-        int secondIdx = binarySearch(nums, target, false);
-        
-        result[0] = firstIdx;
-        result[1] = secondIdx-1;
-        
-        return result;
-    }
-    
-    int binarySearch(vector<int>& nums, int target, bool left_side){
-        int left = 0, right = nums.size();
-        
-        while (left < right){
-            int mid = (left+right)/2;
-            if (((nums[mid] == target) && left_side) || (nums[mid] > target)){
-                right = mid;
+        while (left <= right){
+            int mid = left + (right - left)/2;
+            
+            if (nums[mid] == target){
+                left = mid+1;
+                result[1] = mid;                
+            }
+            
+            else if (nums[mid] > target){
+                right = mid-1;
             }
             else{
                 left = mid+1;
             }
         }
         
-        return left;
+        return result;       
+        
     }
 };
 
